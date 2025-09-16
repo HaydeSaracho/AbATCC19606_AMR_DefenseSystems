@@ -14,7 +14,7 @@ cd AbATCC19606_Sequences
 # 2. Download the GenBank assembly summary file
 wget https://ftp.ncbi.nlm.nih.gov/genomes/genbank/assembly_summary_genbank.txt
 
-# 3. Filter the table for *Acinetobacter baumannii* ATCC 19606 assemblies
+# 3. Filter the table for Acinetobacter baumannii ATCC 19606 assemblies
 cat assembly_summary_genbank.txt | grep "Acinetobacter" | grep "baumannii" | grep "ATCC" | grep "19606" > AbATCC19606_assembly_summary_genbank.tsv
 
 # 4. (Optional) Clean and transform the file manually if needed
