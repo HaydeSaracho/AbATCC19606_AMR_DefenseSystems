@@ -27,6 +27,7 @@ wget -i AbATCC19606_genomes_urls.txt
 
 # 7. Decompress the downloaded FASTA files
 gzip -d *.fna.gz
+```
 
 ## Detect antimicrobial resistance genes
 
@@ -43,3 +44,4 @@ for f in ./AbATCC19606_Sequences/*.fna; do
         abricate --db $db "$f" > "Antimicrobial_resistance_genes/${base}_${db}.tab"
     done
 done
+```
