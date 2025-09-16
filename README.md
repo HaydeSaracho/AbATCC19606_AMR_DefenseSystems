@@ -27,3 +27,19 @@ wget -i AbATCC19606_genomes_urls.txt
 
 # 7. Decompress the downloaded FASTA files
 gzip -d *.fna.gz
+
+## Detect antimicrobial resistance genes
+
+This step identifies antimicrobial resistance (AMR) genes in the genomes using **ABRicate** with the **CARD** database.
+
+```bash
+# Create directory for results
+mkdir -p Antimicrobial_resistance_genes
+
+# Run ABRicate on all genome sequences
+for f in ./AbATCC19606_Sequences/*.fna; do
+    base=$(basename "$f" .fna)
+    for db in card; do
+        abricate --db $db "$f" > "Antimicrobial_resistance_genes/${base}_${db}.tab"
+    done
+done
