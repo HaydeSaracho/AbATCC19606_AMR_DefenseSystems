@@ -49,3 +49,7 @@ cat *.tab > Results_AbATCC19606_CARD.tab
 ```
 
 ### Process AMR results in Power Pivot
+
+The raw output obtained from ABRicate was processed using **Power Pivot** in Excel to prepare a clean table for downstream analysis.
+
+#### Steps performed
