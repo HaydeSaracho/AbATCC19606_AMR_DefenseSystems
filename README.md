@@ -44,4 +44,6 @@ for f in ./AbATCC19606_Sequences/*.fna; do
         abricate --db $db "$f" > "Antimicrobial_resistance_genes/${base}_${db}.tab"
     done
 done
+# Merge .tab files
+cat *.tab > Results_AbATCC19606_CARD.tab
 ```
