@@ -2,7 +2,7 @@
 
 This repository contains a reproducible workflow to download *Acinetobacter baumannii* ATCC 19606 genomes from NCBI, annotate antimicrobial resistance genes using ABRicate (with the CARD database), and predict anti-phage defense systems with PADLOC and DefenseFinder.
 
-## Workflow: Download Genomes of *Acinetobacter baumannii* ATCC 19606
+## Download Genomes of *Acinetobacter baumannii* ATCC 19606
 
 This section describes how to download genomic sequences of *Acinetobacter baumannii* ATCC 19606 from NCBI GenBank. The workflow uses Linux command-line tools and is reproducible.
 
