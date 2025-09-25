@@ -47,3 +47,5 @@ done
 # Merge .tab files
 cat *.tab > Results_AbATCC19606_CARD.tab
 ```
+
+### Process AMR results in Power Pivot
