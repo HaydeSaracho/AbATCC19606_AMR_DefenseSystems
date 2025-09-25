@@ -44,6 +44,7 @@ for f in ./AbATCC19606_Sequences/*.fna; do
         abricate --db $db "$f" > "Antimicrobial_resistance_genes/${base}_${db}.tab"
     done
 done
+
 # Merge .tab files
 cat *.tab > Results_AbATCC19606_CARD.tab
 ```
@@ -66,3 +67,26 @@ The final table contains three key columns:
 Below is an example of the processed table in Power Query:
 
 ![Processing the Card Table in Power Query](images/CARD_Table_Power_Query.jpeg)
+
+## Detect phage defense systems
+
+### Using PADLOC
+
+```bash
+# Create directory for results
+mkdir -p PADLOC_results
+
+# Run PADLOC on all assemblies
+for f in ./AbATCC19606_Sequences/*.fna; do
+    base=$(basename "$f" .fna)
+    padloc --fna "$f" --outdir PADLOC_results/${base}_padloc_results
+done
+
+# Merge .tab files
+cat *.csv > Results_AbATCC19606_PADLOC.csv
+```
+
+### Process PADLOC results in Power Query
+
+The raw output obtained from PADLOC was processed using **Power Query** in Excel to prepare a clean table for downstream analysis.
+
