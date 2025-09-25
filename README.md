@@ -64,3 +64,5 @@ The final table contains three key columns:
 - **RESISTANCE** → associated antimicrobial category.  
 
 Below is an example of the processed table in Power Query:
+
+![Processing the Card Table in Power Query](images/CARD_Table_Power_Query.jpeg)
