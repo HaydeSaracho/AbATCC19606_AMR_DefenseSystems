@@ -58,12 +58,7 @@ The raw output obtained from ABRicate was processed using **Power Query** in Exc
 2. Split columns by delimiter
 3. Removed unnecessary columns (for this study).
 4. Applied text cleaning (capitalization, standardization of names).
-
-The final table contains three key columns:  
-- **ASSEMBLY_ID** → identifier of each genome assembly.  
-- **GENE** → antimicrobial resistance gene detected.  
-- **RESISTANCE** → associated antimicrobial category.  
-
+ 
 Below is an example of the processed table in Power Query:
 
 ![Processing the Card Table in Power Query](images/CARD_Table_Power_Query.jpeg)
@@ -123,12 +118,6 @@ The raw output obtained from PADLOC was processed using **Power Query** in Excel
 3. Removed unnecessary columns (for this analysis).
 4. Renamed columns for clarity.
 5. Reordered columns for readability.
-
-The final table contains three key columns:
-
-**Assembly_ID** → identifier of each genome assembly.
-**System** → predicted phage defense system.
-**Protein_Name** → protein(s) associated with the system.
 
 Below is an example of the processed table in Power Query:
 
