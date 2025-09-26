@@ -82,8 +82,35 @@ for f in ./AbATCC19606_Sequences/*.fna; do
     padloc --fna "$f" --outdir PADLOC_results/${base}_padloc_results
 done
 
-# Merge .tab files
+# Merge .csv files
 cat *.csv > Results_AbATCC19606_PADLOC.csv
+```
+
+### Process PADLOC results
+
+The raw output obtained from PADLOC was first pre-processed and then refined using **Power Query** in Excel.
+
+---
+
+#### Pre-process PADLOC output  
+
+The original PADLOC output files (`*_padloc.csv`) were modified to include the corresponding **Assembly_ID** in each row and then merged into a single table.  
+
+**Steps performed**  
+1. Extracted the Assembly accession (`GCA_xxxxxxx.x`) from the filename.  
+2. Appended the accession as a new column to each row of the PADLOC output.  
+3. Saved the modified files as `mod_*_padloc.csv`.  
+4. Merged all modified files into a single table `Salida_PADLOC.csv`.  
+
+```bash
+for file in *_padloc.csv; do
+    gca=$(basename "$file" | grep -oE 'GCA_[0-9]+\.[0-9]+' || true)
+    out="mod_${file}"
+    { printf "%s,GCA\n" "$(head -n1 "$file")"; tail -n +2 "$file" | sed "s/\$/,$gca/"; } > "$out"
+    echo "Generado: $out"
+done
+
+awk 'FNR==1 && NR!=1{next} {print}' mod_*_padloc.csv > Results_AbATCC19606_PADLOC.csv
 ```
 
 ### Process PADLOC results in Power Query
@@ -105,4 +132,78 @@ The final table contains three key columns:
 
 Below is an example of the processed table in Power Query:
 
-![Processing the Card Table in Power Query](images/PADLOC_Table_Power_Query.jpeg)
+![Processing the PADLOC Table in Power Query](images/PADLOC_Table_Power_Query.jpeg)
+
+### Using DefenseFinder
+
+```bash
+mkdir DefenseFinder_results
+for genome in *.fna; do
+    echo "Procesando $genome..."
+    defense-finder run "$genome" --out-dir "DefenseFinder_results/${genome%.fna}_defense"
+done
+
+# Merge .tsv files
+cat *.tsv > Results_AbATCC19606_DefenseFinder.tsv
+```
+
+### Process DefenseFinder results
+
+The raw output obtained from DefenseFinder was first pre-processed and then refined using **Power Query** in Excel.
+
+---
+
+#### Pre-process DefenseFinder output  
+
+The original DefenseFinder output files (`*_genomic_defense_finder_systems.tsv`) were modified to include the corresponding **Assembly_ID** in each row and then merged into a single table.  
+
+**Steps performed**  
+1. Extracted the Assembly accession (`GCA_xxxxxxx.x`) from the filename.  
+2. Appended the accession as a new column to each row of the DefenseFinder output.  
+3. Saved the modified files as `mod_*_genomic_defense_finder_systems.tsv`.  
+4. Merged all modified files into a single table `Salida_DefenseFinder.tsv`.  
+
+```bash
+for file in *_genomic_defense_finder_systems.tsv; do
+    gca=$(basename "$file" | grep -oE 'GCA_[0-9]+\.[0-9]+' || true)
+    out="mod_${file}"
+    { printf "%s\tGCA\n" "$(head -n1 "$file")"; tail -n +2 "$file" | sed "s/\$/\t$gca/"; } > "$out"
+    echo "Generado: $out"
+done
+
+awk 'FNR==1 && NR!=1{next} {print}' mod_*_genomic_defense_finder_systems.tsv > Salida_DefenseFinder.tsv
+```
+
+### Process DefenseFinder results in Power Query
+
+The raw output obtained from DefenseFinder was processed using **Power Query** in Excel to prepare a clean table for downstream analysis.
+
+#### Steps performed
+1. Imported the .tsv file into Power Query.
+2. Removed unnecessary columns.
+3. Renamed selected columns for clarity.
+4. Reordered the columns for consistency.
+5. Kept only the most relevant information for this study.
+
+Below is an example of the processed table in Power Query:
+
+![Processing the DefenseFinder Table in Power Query](images/DefenseFinder_Table_Power_Query.jpeg)
+
+## Relational Model & Dashboard
+
+The processed outputs from AMR, PADLOC, and DefenseFinder were integrated into a relational model using Power Pivot in Excel.
+This relational structure allowed consistent analysis across assemblies, linking antimicrobial resistance genes and phage defense systems.
+
+### Relational Model:
+
+![Relational Model using Power Pivot in Excel](images/Relational_Model.jpeg)
+
+### Dashboard:
+
+![Basic DasBoard](images/DashBoard.jpeg)
+
+The dashboard provides:
+- Total assemblies analyzed.
+- Number of defense systems detected according to PADLOC and DefenseFinder.
+- Year distribution of assemblies.
+- Comparative stacked barplot of AMR genes and phage defense systems per assembly.
